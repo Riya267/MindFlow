@@ -1,30 +1,78 @@
-# React + TypeScript + Vite
+# Your Chrome Note Keeper Extension
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
+This Chrome extension is a note-keeping application built using React. It offers a range of features to help users efficiently manage their notes with both basic and unique functionalities.
 
-Currently, two official plugins are available:
+## Basic Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### 1. Add/Edit/Delete Notes
+- Allow users to create new notes.
+- Enable editing and deleting of existing notes.
 
-## Expanding the ESLint configuration
+### 2. Save Notes
+- Implement a mechanism to save notes persistently.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### 3. Categories/Tags
+- Allow users to categorize or tag their notes for better organization.
 
-- Configure the top-level `parserOptions` property like this:
+### 4. Search Functionality
+- Implement a search feature to quickly find specific notes.
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+### 5. Markdown Support
+- Enable users to format their notes using Markdown for better readability.
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+### 6. Simple User Interface
+- Keep the user interface clean and easy to use for a seamless note-taking experience.
+
+### 7. Sync Across Devices
+- If possible, implement cloud synchronization to enable users to access their notes from different devices.
+
+### 8. Keyboard Shortcuts
+- Provide keyboard shortcuts for common actions to enhance user productivity.
+
+## Unique Features
+
+### 1. Speech-to-Text
+- Implement a feature that allows users to create notes using speech-to-text functionality.
+
+### 2. Dark Mode
+- Include a dark mode option for users who prefer a different theme.
+
+### 3. Image Attachments
+- Allow users to attach images to their notes for a more multimedia-rich experience.
+
+### 4. Reminder/Alarm System
+- Integrate a reminder or alarm system to set notifications for specific notes.
+
+### 5. Collaboration
+- Implement a collaborative feature that allows users to share and edit notes with others.
+
+### 6. Analytics
+- Include basic analytics to track note-taking patterns or usage statistics.
+
+### 7. Encrypted Notes
+- Offer an option to encrypt sensitive notes for enhanced privacy.
+
+### 8. Customizable Themes
+- Allow users to customize the look and feel of the extension by choosing different themes.
+
+### 9. Export/Import Notes
+- Provide the ability to export and import notes for backup or migration purposes.
+
+### 10. Version History
+- Keep a version history for each note, allowing users to revert to previous versions.
+
+## Usage
+
+1. Clone the repository.
+2. Open Chrome and navigate to `chrome://extensions/`.
+3. Enable "Developer mode" in the top right corner.
+4. Click "Load unpacked" and select the project folder.
+
+## Contributing
+
+Contributions are welcome! Please follow our [contribution guidelines](CONTRIBUTING.md).
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).

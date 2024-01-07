@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "MindFlow",
+  "version": "1.0.0",
+  "description": "Distraction-free writing extension",
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "icons": {
+    "16": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
+  },
+    "author": "Riya Dhawan",
+    "action":{},
+    "background": {
+      "service_worker": "background.js",
+      "type": "module"
+    }
+}
