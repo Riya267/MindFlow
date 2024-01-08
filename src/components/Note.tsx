@@ -5,21 +5,23 @@ import { NoteProps, useNoteStore } from '../store/noteStore';
 
 const Note: React.FC<NoteProps> = ({ title, description, id, content}) => {
   const { colorMode } = useColorMode();
-  const { setCreateEditNote } = useNoteStore();
+  const { setShowEditor, setExitingNote} = useNoteStore();
+  console.log("render component", id)
   const handleEditAction = () => {
-    setCreateEditNote({
-       showEditor: true,
-       exitingNote: {
-        title,
-        description,
-        id,
-        content
-       }
-    })
+    console.log("id", id)
+      setExitingNote({
+          id,
+          title,
+          description,
+          content
+      })
+      setShowEditor(true)
   }
+
   const handleDeleteAction = () => {
 
   }
+
   return (
     <Box
       borderWidth="1px"
@@ -42,7 +44,7 @@ const Note: React.FC<NoteProps> = ({ title, description, id, content}) => {
           icon={<EditIcon />}
           size="sm"
           colorScheme="teal"
-          aria-label="Delete Note"
+          aria-label="Edit Note"
           onClick={handleEditAction}
         />
         <IconButton

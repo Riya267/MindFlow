@@ -6,16 +6,12 @@ export interface NoteProps {
   description: string;
   content: string;
 }
-
-interface CreateEditNote {
-   showEditor: boolean;
-   exitingNote?: NoteProps | null;
-}
-
 interface NoteStore {
   notes: NoteProps[];
-  createEditNote: CreateEditNote;
-  setCreateEditNote: (val: CreateEditNote) => void;
+  showEditor: boolean;
+  existingNote?: NoteProps| undefined;
+  setShowEditor: (val:boolean) => void;
+  setExitingNote: (val:NoteProps| undefined) => void;
   addNote: (note: NoteProps) => void;
   editNote: (id: string, updatedNote: NoteProps) => void;
   deleteNote: (id: string) => void;
@@ -23,11 +19,10 @@ interface NoteStore {
 
 export const useNoteStore = create<NoteStore>((set) => ({
   notes: [],
-  createEditNote: {
-    showEditor: false,
-    exitingNote: null
-  },
-  setCreateEditNote: (val) => set({ createEditNote: val }),
+  showEditor: false,
+  existingNote: undefined,
+  setShowEditor: (val) => set({ showEditor: val }),
+  setExitingNote: (note) => set(()=> ({ existingNote: note})),
   addNote: (note) => set((state) => ({ notes: [...state.notes, note] })),
   editNote: (id, updatedNote) =>
     set((state) => ({

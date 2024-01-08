@@ -1,5 +1,3 @@
-// Header.tsx
-
 import React from 'react';
 import { Flex, Input, IconButton, useColorMode } from '@chakra-ui/react';
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
