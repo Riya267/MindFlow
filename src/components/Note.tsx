@@ -5,10 +5,9 @@ import { NoteProps, useNoteStore } from '../store/noteStore';
 
 const Note: React.FC<NoteProps> = ({ title, description, id, content}) => {
   const { colorMode } = useColorMode();
-  const { setShowEditor, setExitingNote} = useNoteStore();
-  console.log("render component", id)
+  const { setShowEditor, setExitingNote, deleteNote} = useNoteStore();
+
   const handleEditAction = () => {
-    console.log("id", id)
       setExitingNote({
           id,
           title,
@@ -18,9 +17,7 @@ const Note: React.FC<NoteProps> = ({ title, description, id, content}) => {
       setShowEditor(true)
   }
 
-  const handleDeleteAction = () => {
-
-  }
+  const handleDeleteAction = () => deleteNote(id)
 
   return (
     <Box
