@@ -1,5 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Box, Textarea, Heading, Input, GridItem, Grid, Button, Flex } from '@chakra-ui/react';
+import {
+  Box,
+  Textarea,
+  Heading,
+  Input,
+  GridItem,
+  Grid,
+  Button,
+  Flex,
+  FormControl,
+  FormLabel,
+  FormErrorMessage,
+  VisuallyHidden,
+} from '@chakra-ui/react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { NoteProps, useNoteStore } from '../store/noteStore';
@@ -12,12 +25,15 @@ const MarkdownEditor: React.FC = () => {
   const existingNote = useNoteStore((state) => state.existingNote);
   const editNote = useNoteStore((state) => state.editNote);
   const addNote = useNoteStore((state) => state.addNote);
-  const [noteDetails, setNoteDetails] = useState<NoteProps>({
+  const setExistingNote = useNoteStore((state) => state.setExistingNote);
+  const initialNote = {
     id: '',
     title: '',
     description: '',
     content: '',
-  });
+  };
+  const [noteDetails, setNoteDetails] = useState<NoteProps>(initialNote);
+  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
 
   useEffect(() => {
     if (existingNote) {
@@ -25,28 +41,50 @@ const MarkdownEditor: React.FC = () => {
     }
   }, [existingNote]);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, key: string) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    key: string
+  ) => {
     setNoteDetails({
       ...noteDetails,
       [key]: e.target.value,
     });
   };
 
-  const handleSaveAction = () => {
-    if (noteDetails && Object.values(noteDetails).every((value) => Boolean(value))) {
-      editNote(noteDetails.id, noteDetails);
-    } else {
-      addNote({...noteDetails, id: uuidv4()});
+  const validateForm = () => {
+    const errors: Record<string, string> = {};
+    if (!noteDetails.title.trim()) {
+      errors.title = 'Title is required';
     }
-    setShowEditor(false);
+    if (!noteDetails.description.trim()) {
+      errors.description = 'Description is required';
+    }
+    if (!noteDetails.content.trim()) {
+      errors.content = 'Content is required';
+    }
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const handleSaveAction = () => {
+    if (validateForm()) {
+      if (noteDetails.id) {
+        editNote(noteDetails.id, noteDetails);
+        setExistingNote(initialNote);
+      } else {
+        addNote({ ...noteDetails, id: uuidv4() });
+      }
+      setShowEditor(false);
+    }
   };
 
   return (
     <>
       {showEditor && (
-        <>
+        <form>
           <Flex justify="flex-end" m={2}>
             <Button
+              type="button"
               size="sm"
               colorScheme="green"
               aria-label="Save Note"
@@ -54,7 +92,14 @@ const MarkdownEditor: React.FC = () => {
             >
               Save Note
             </Button>
-            <Button size="sm" colorScheme="blue" aria-label="Cancel Note" ml={4} onClick={() => setShowEditor(false)}>
+            <Button
+              type="button"
+              size="sm"
+              colorScheme="blue"
+              aria-label="Cancel Note"
+              ml={4}
+              onClick={() => setShowEditor(false)}
+            >
               Cancel
             </Button>
           </Flex>
@@ -67,29 +112,47 @@ const MarkdownEditor: React.FC = () => {
                   <Heading as="h2" size="md" m={4} ml={0}>
                     Write your Text or Markdown:
                   </Heading>
-                  <Input
-                    placeholder="Title"
-                    size="md"
-                    value={noteDetails.title || ''}
-                    onChange={(e) => handleInputChange(e, 'title')}
-                  />
-                  <Input
-                    placeholder="Description"
-                    size="md"
-                    value={noteDetails.description || ''}
-                    onChange={(e) => handleInputChange(e, 'description')}
-                  />
+                  <FormControl isInvalid={!!formErrors.title}>
+                    <FormLabel htmlFor="title"><VisuallyHidden>Title</ VisuallyHidden></FormLabel>
+                    <Input
+                      id="title"
+                      placeholder="Title"
+                      size="md"
+                      value={noteDetails.title || ''}
+                      onChange={(e) => handleInputChange(e, 'title')}
+                      required
+                    />
+                    <FormErrorMessage>{formErrors.title}</FormErrorMessage>
+                  </FormControl>
+                  <FormControl isInvalid={!!formErrors.description}>
+                    <FormLabel htmlFor="description"><VisuallyHidden>Description</VisuallyHidden></FormLabel>
+                    <Input
+                      id="description"
+                      placeholder="Description"
+                      size="md"
+                      value={noteDetails.description || ''}
+                      onChange={(e) => handleInputChange(e, 'description')}
+                      required
+                    />
+                    <FormErrorMessage>{formErrors.description}</FormErrorMessage>
+                  </FormControl>
                 </GridItem>
 
                 <GridItem rowSpan={2}>
                   {/* Right side (Textarea) */}
-                  <Textarea
-                    placeholder="Start typing..."
-                    value={noteDetails.content || ''}
-                    onChange={(e) => handleInputChange(e, 'content')}
-                    ref={textAreaRef}
-                    h="70vh"
-                  />
+                  <FormControl isInvalid={!!formErrors.content}>
+                    <FormLabel htmlFor="content"><VisuallyHidden>Content</VisuallyHidden></FormLabel>
+                    <Textarea
+                      id="content"
+                      placeholder="Start typing..."
+                      value={noteDetails.content || ''}
+                      onChange={(e) => handleInputChange(e, 'content')}
+                      ref={textAreaRef}
+                      h="70vh"
+                      required
+                    />
+                    <FormErrorMessage>{formErrors.content}</FormErrorMessage>
+                  </FormControl>
                 </GridItem>
               </Grid>
             </GridItem>
@@ -104,7 +167,7 @@ const MarkdownEditor: React.FC = () => {
               </Box>
             </GridItem>
           </Grid>
-        </>
+        </form>
       )}
     </>
   );

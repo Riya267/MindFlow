@@ -5,7 +5,9 @@ import { NoteProps, useNoteStore } from '../store/noteStore';
 
 const Note: React.FC<NoteProps> = ({ title, description, id, content}) => {
   const { colorMode } = useColorMode();
-  const { setShowEditor, setExitingNote, deleteNote} = useNoteStore();
+  const setShowEditor = useNoteStore(state => state.setShowEditor);
+  const setExitingNote = useNoteStore(state => state.setExistingNote);
+  const deleteNote = useNoteStore(state => state.deleteNote);
 
   const handleEditAction = () => {
       setExitingNote({

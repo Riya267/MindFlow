@@ -27,9 +27,6 @@ This Chrome extension is a note-keeping application built using React. It offers
 ### 7. Sync Across Devices
 - If possible, implement cloud synchronization to enable users to access their notes from different devices.
 
-### 8. Keyboard Shortcuts
-- Provide keyboard shortcuts for common actions to enhance user productivity.
-
 ## Unique Features
 
 ### 1. Speech-to-Text
@@ -38,29 +35,23 @@ This Chrome extension is a note-keeping application built using React. It offers
 ### 2. Dark Mode
 - Include a dark mode option for users who prefer a different theme.
 
-### 3. Image Attachments
-- Allow users to attach images to their notes for a more multimedia-rich experience.
-
-### 4. Reminder/Alarm System
+### 3. Reminder/Alarm System
 - Integrate a reminder or alarm system to set notifications for specific notes.
 
-### 5. Collaboration
+### 4. Collaboration
 - Implement a collaborative feature that allows users to share and edit notes with others.
 
-### 6. Analytics
+### 5. Analytics
 - Include basic analytics to track note-taking patterns or usage statistics.
 
-### 7. Encrypted Notes
+### 6. Encrypted Notes
 - Offer an option to encrypt sensitive notes for enhanced privacy.
 
-### 8. Customizable Themes
+### 7. Customizable Themes
 - Allow users to customize the look and feel of the extension by choosing different themes.
 
-### 9. Export/Import Notes
+### 8. Export/Import Notes
 - Provide the ability to export and import notes for backup or migration purposes.
-
-### 10. Version History
-- Keep a version history for each note, allowing users to revert to previous versions.
 
 ## Usage
 

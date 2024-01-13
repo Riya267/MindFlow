@@ -1,15 +1,18 @@
 import React from 'react';
-import { Flex, Input, IconButton, useColorMode } from '@chakra-ui/react';
+import { Input, IconButton, useColorMode, Grid, Center, GridItem } from '@chakra-ui/react';
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
+import NotesExportImport from './NotesImportExport';
 
 const Header: React.FC = () => {
   const { colorMode, toggleColorMode } = useColorMode();
 
   return (
-    <Flex
+    <Grid
       as="header"
-      align="center"
-      justify="space-between"
+      templateColumns="repeat(5, 1fr)"
+      justifyContent={"center"}
+      alignItems={"center"}
+      gap={2}
       padding={4}
       borderBottom="1px"
       borderColor="gray.200"
@@ -18,30 +21,38 @@ const Header: React.FC = () => {
       zIndex={1}
       bg={colorMode === 'light' ? 'white' : 'gray.800'}
     >
-      {/* Search Bar */}
-        <Input
-            type="text"
-            placeholder="Search notes..."
-            mx="auto"
-            flex="1"
-            maxWidth="400px"
-            rounded="full"
-            borderColor="gray.300"
-            focusBorderColor="teal.500"
-        />
+      <GridItem colSpan={1} justifySelf={"flex-start"}>
+        <NotesExportImport />
+      </GridItem>
       
-      {/* Dark/Light Mode Toggle */}
-      <IconButton
-        aria-label="Toggle Dark/Light Mode"
-        icon={colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
-        onClick={toggleColorMode}
-        ml={4}
-        size="md"
-        rounded="full"
-        bg="transparent"
-        _hover={{ bg: 'gray.300' }}
-      />
-    </Flex>
+      <GridItem colSpan={3}>
+        <Center>
+          <Input
+              type="text"
+              placeholder="Search notes..."
+              mx="auto"
+              flex="1"
+              maxWidth="400px"
+              rounded="full"
+              borderColor="gray.300"
+              focusBorderColor="teal.500"
+          />
+        </Center>
+      </GridItem>
+      
+      <GridItem colSpan={1} justifySelf={"flex-end"}>
+          <IconButton
+            aria-label="Toggle Dark/Light Mode"
+            icon={colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
+            onClick={toggleColorMode}
+            ml={4}
+            size="md"
+            rounded="full"
+            bg="transparent"
+            _hover={{ bg: 'gray.300' }}
+          />
+      </GridItem>
+    </Grid>
   );
 };
 

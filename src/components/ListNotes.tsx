@@ -4,7 +4,10 @@ import Note from './Note';
 import { useNoteStore } from '../store/noteStore';
 
 const ListNotes: React.FC = () => {
-  const { setShowEditor, showEditor, notes } = useNoteStore();
+  const notes = useNoteStore((state) => state.notes)
+  const setShowEditor = useNoteStore((state) => state.setShowEditor)
+  const showEditor = useNoteStore((state) => state.showEditor)
+
   return (
     <>
       {!showEditor && (
