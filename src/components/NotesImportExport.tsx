@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Flex, Input, Box, FormLabel } from '@chakra-ui/react';
 import * as XLSX from 'xlsx';
 import { NoteProps, useNoteStore } from '../store/noteStore';
+import { DownloadIcon } from '@chakra-ui/icons';
 
 const NotesExportImport: React.FC = () => {
   const notes = useNoteStore((state) => state.notes);
@@ -54,11 +55,11 @@ const NotesExportImport: React.FC = () => {
           <Input id="importfile" type="file" accept=".json, .xlsx" onChange={handleFileChange} mb={2}/>
       </Flex>
       <Flex direction="row" align="center" justifyContent="space-between" mt={2}>
-        <Button onClick={handleExportJSON} colorScheme="teal" size="sm" mb={2}>
-          Export (.json)
+        <Button leftIcon={<DownloadIcon />} onClick={handleExportJSON} colorScheme="teal" size="sm" mb={2}>
+          .json
         </Button>
-        <Button onClick={handleExportExcel} colorScheme="teal" size="sm" mb={2}>
-          Export (.xls)
+        <Button leftIcon={<DownloadIcon />} onClick={handleExportExcel} colorScheme="teal" size="sm" mb={2}>
+          .xls
         </Button>
       </Flex>
     </Box>

@@ -5,12 +5,14 @@ export interface NoteProps {
   title: string;
   description: string;
   content: string;
-  tags: string[];
+  tags?: string[];
 }
 interface NoteStore {
   notes: NoteProps[];
   showEditor: boolean;
   existingNote?: NoteProps| undefined;
+  searchQuery: string;
+  setSearchQuery: (val: string) => void;
   setShowEditor: (val:boolean) => void;
   setExistingNote: (val:NoteProps| undefined) => void;
   addNote: (note: NoteProps) => void;
@@ -23,6 +25,8 @@ export const useNoteStore = create<NoteStore>((set) => ({
   notes: [],
   showEditor: false,
   existingNote: undefined,
+  searchQuery:'',
+  setSearchQuery: (val) => set({searchQuery: val}),
   setShowEditor: (val) => set({ showEditor: val }),
   setExistingNote: (note) => set(()=> ({ existingNote: note})),
   addNote: (note) => set((state) => ({ notes: [note, ...state.notes] })),

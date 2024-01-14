@@ -40,7 +40,7 @@ const Note: React.FC<NoteProps> = ({ title, description, id, content, tags}) => 
         {description}
       </Text>
 
-      {tags.map((tag) => {
+      {tags?.map((tag) => {
         return <Text color="purple" mb={4} fontWeight={"bold"}>
           {tag}
         </Text>

@@ -18,6 +18,12 @@ import remarkGfm from 'remark-gfm';
 import { NoteProps, useNoteStore } from '../store/noteStore';
 import { v4 as uuidv4 } from 'uuid';
 
+export const VisuallyHiddenLabel: React.FC<{children: React.ReactNode}> = ({ children }) => (
+  <FormLabel>
+    <VisuallyHidden>{children}</VisuallyHidden>
+  </FormLabel>
+);
+
 const MarkdownEditor: React.FC = () => {
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
   const setShowEditor = useNoteStore((state) => state.setShowEditor);
@@ -33,7 +39,7 @@ const MarkdownEditor: React.FC = () => {
     content: '',
     tags: []
   };
-  const [noteDetails, setNoteDetails] = useState<NoteProps>(initialNote);
+  const [noteDetails, setNoteDetails] = useState<NoteProps>(() => initialNote);
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
 
   useEffect(() => {
@@ -48,15 +54,16 @@ const MarkdownEditor: React.FC = () => {
   ) => {
     if (key === 'tags') {
       const tagsArray = e.target.value.split(',').map((tag) => tag.trim());
-      setNoteDetails({
-        ...noteDetails,
-        tags: tagsArray,
-      });
+      setNoteDetails(prevNoteDetails => ({
+        ...prevNoteDetails,
+        [key]: tagsArray,
+      }));
     } else {
-      setNoteDetails({
-        ...noteDetails,
+      setNoteDetails(prevNoteDetails => ({
+        ...prevNoteDetails,
         [key]: e.target.value,
-      });
+      }));
+      
     }
   };
 
@@ -68,7 +75,7 @@ const MarkdownEditor: React.FC = () => {
     if (!noteDetails.description.trim()) {
       errors.description = 'Description is required';
     }
-    if (!noteDetails.tags.every((tag) => tag.trim())) {
+    if (!noteDetails?.tags?.every((tag) => tag.trim())) {
       errors.tags = 'Please enter valid tags';
     }
     if (!noteDetails.content.trim()) {
@@ -86,9 +93,17 @@ const MarkdownEditor: React.FC = () => {
       } else {
         addNote({ ...noteDetails, id: uuidv4() });
       }
+      setNoteDetails(initialNote)
       setShowEditor(false);
+
     }
   };
+
+  const handleCancelAction = () => {
+    setExistingNote(initialNote);
+    setNoteDetails(initialNote)
+    setShowEditor(false);
+  }
 
   return (
     <>
@@ -110,7 +125,7 @@ const MarkdownEditor: React.FC = () => {
               colorScheme="blue"
               aria-label="Cancel Note"
               ml={4}
-              onClick={() => setShowEditor(false)}
+              onClick={handleCancelAction}
             >
               Cancel
             </Button>
@@ -125,7 +140,7 @@ const MarkdownEditor: React.FC = () => {
                     Write your Text or Markdown:
                   </Heading>
                   <FormControl isInvalid={!!formErrors.title}>
-                    <FormLabel htmlFor="title"><VisuallyHidden>Title</ VisuallyHidden></FormLabel>
+                    <VisuallyHiddenLabel>Title</ VisuallyHiddenLabel>
                     <Input
                       id="title"
                       placeholder="Title"
@@ -137,7 +152,7 @@ const MarkdownEditor: React.FC = () => {
                     <FormErrorMessage>{formErrors.title}</FormErrorMessage>
                   </FormControl>
                   <FormControl isInvalid={!!formErrors.description}>
-                    <FormLabel htmlFor="description"><VisuallyHidden>Description</VisuallyHidden></FormLabel>
+                    <VisuallyHiddenLabel>Description</VisuallyHiddenLabel>
                     <Input
                       id="description"
                       placeholder="Description"
@@ -149,14 +164,12 @@ const MarkdownEditor: React.FC = () => {
                     <FormErrorMessage>{formErrors.description}</FormErrorMessage>
                   </FormControl>
                   <FormControl isInvalid={!!formErrors.tags}>
-                    <FormLabel htmlFor="tags">
-                      <VisuallyHidden>Tags</VisuallyHidden>
-                    </FormLabel>
+                  <VisuallyHiddenLabel>Tags</ VisuallyHiddenLabel>
                     <Input
                       id="tags"
                       placeholder="Tags (comma-separated)"
                       size="md"
-                      value={noteDetails.tags.join(', ')}
+                      value={noteDetails?.tags?.join(', ')}
                       onChange={(e) => handleInputChange(e, 'tags')}
                     />
                     <FormErrorMessage>{formErrors.tags}</FormErrorMessage>
@@ -166,7 +179,7 @@ const MarkdownEditor: React.FC = () => {
                 <GridItem rowSpan={2}>
                   {/* Right side (Textarea) */}
                   <FormControl isInvalid={!!formErrors.content}>
-                    <FormLabel htmlFor="content"><VisuallyHidden>Content</VisuallyHidden></FormLabel>
+                    <VisuallyHiddenLabel>Content</VisuallyHiddenLabel>
                     <Textarea
                       id="content"
                       placeholder="Start typing..."

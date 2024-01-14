@@ -2,9 +2,12 @@ import React from 'react';
 import { Input, IconButton, useColorMode, Grid, Center, GridItem } from '@chakra-ui/react';
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 import NotesExportImport from './NotesImportExport';
+import { useNoteStore } from '../store/noteStore';
 
 const Header: React.FC = () => {
   const { colorMode, toggleColorMode } = useColorMode();
+  const searchQuery = useNoteStore((state) => state.searchQuery);
+  const setSearchQuery = useNoteStore((state) => state.setSearchQuery);
 
   return (
     <Grid
@@ -36,6 +39,8 @@ const Header: React.FC = () => {
               rounded="full"
               borderColor="gray.300"
               focusBorderColor="teal.500"
+              value={searchQuery}
+              onChange={(e)=>setSearchQuery(e.target.value)}
           />
         </Center>
       </GridItem>
