@@ -22,7 +22,7 @@ const ListNotes: React.FC = () => {
             <Grid templateColumns="repeat(3, 1fr)" gap={4} justifyItems="center">
                 {notes.map((note) => (
                 <GridItem key={note.id} colSpan={1}>
-                    <Note title={note.title} description={note.description} id={note.id} content={note.content}/>
+                    <Note {...note}/>
                 </GridItem>
                 ))}
             </Grid> :

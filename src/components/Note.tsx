@@ -3,7 +3,7 @@ import { Box, Flex, Heading, Text, IconButton, useColorMode } from '@chakra-ui/r
 import { EditIcon, DeleteIcon } from '@chakra-ui/icons';
 import { NoteProps, useNoteStore } from '../store/noteStore';
 
-const Note: React.FC<NoteProps> = ({ title, description, id, content}) => {
+const Note: React.FC<NoteProps> = ({ title, description, id, content, tags}) => {
   const { colorMode } = useColorMode();
   const setShowEditor = useNoteStore(state => state.setShowEditor);
   const setExitingNote = useNoteStore(state => state.setExistingNote);
@@ -14,7 +14,8 @@ const Note: React.FC<NoteProps> = ({ title, description, id, content}) => {
           id,
           title,
           description,
-          content
+          content,
+          tags
       })
       setShowEditor(true)
   }
@@ -38,6 +39,13 @@ const Note: React.FC<NoteProps> = ({ title, description, id, content}) => {
       <Text color="gray.500" mb={4}>
         {description}
       </Text>
+
+      {tags.map((tag) => {
+        return <Text color="purple" mb={4} fontWeight={"bold"}>
+          {tag}
+        </Text>
+      })}
+
       <Flex justify="space-between">
         <IconButton
           icon={<EditIcon />}

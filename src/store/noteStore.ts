@@ -5,6 +5,7 @@ export interface NoteProps {
   title: string;
   description: string;
   content: string;
+  tags: string[];
 }
 interface NoteStore {
   notes: NoteProps[];

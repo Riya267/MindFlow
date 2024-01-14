@@ -31,6 +31,7 @@ const MarkdownEditor: React.FC = () => {
     title: '',
     description: '',
     content: '',
+    tags: []
   };
   const [noteDetails, setNoteDetails] = useState<NoteProps>(initialNote);
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
@@ -45,10 +46,18 @@ const MarkdownEditor: React.FC = () => {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     key: string
   ) => {
-    setNoteDetails({
-      ...noteDetails,
-      [key]: e.target.value,
-    });
+    if (key === 'tags') {
+      const tagsArray = e.target.value.split(',').map((tag) => tag.trim());
+      setNoteDetails({
+        ...noteDetails,
+        tags: tagsArray,
+      });
+    } else {
+      setNoteDetails({
+        ...noteDetails,
+        [key]: e.target.value,
+      });
+    }
   };
 
   const validateForm = () => {
@@ -58,6 +67,9 @@ const MarkdownEditor: React.FC = () => {
     }
     if (!noteDetails.description.trim()) {
       errors.description = 'Description is required';
+    }
+    if (!noteDetails.tags.every((tag) => tag.trim())) {
+      errors.tags = 'Please enter valid tags';
     }
     if (!noteDetails.content.trim()) {
       errors.content = 'Content is required';
@@ -135,6 +147,19 @@ const MarkdownEditor: React.FC = () => {
                       required
                     />
                     <FormErrorMessage>{formErrors.description}</FormErrorMessage>
+                  </FormControl>
+                  <FormControl isInvalid={!!formErrors.tags}>
+                    <FormLabel htmlFor="tags">
+                      <VisuallyHidden>Tags</VisuallyHidden>
+                    </FormLabel>
+                    <Input
+                      id="tags"
+                      placeholder="Tags (comma-separated)"
+                      size="md"
+                      value={noteDetails.tags.join(', ')}
+                      onChange={(e) => handleInputChange(e, 'tags')}
+                    />
+                    <FormErrorMessage>{formErrors.tags}</FormErrorMessage>
                   </FormControl>
                 </GridItem>
 
