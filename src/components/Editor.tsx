@@ -150,7 +150,7 @@ const MarkdownEditor: React.FC = () => {
               Cancel
             </Button>
           </Flex>
-          <Grid templateColumns="repeat(2, 1fr)" gap={2} p={4}>
+          <Grid templateColumns={{lg:"repeat(2, 1fr)"}} gap={2} p={4}>
             {/* Writing Area */}
             <GridItem colSpan={1} h="100vh">
               <Grid templateRows={{ base: 'repeat(6,1fr)' }} h="100%">

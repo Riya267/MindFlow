@@ -12,7 +12,7 @@ const Header: React.FC = () => {
   return (
     <Grid
       as="header"
-      templateColumns="repeat(2, 1fr)"
+      templateColumns={{ base: '1fr', lg: 'repeat(2, 1fr)' }}
       justifyContent={"center"}
       alignItems={"center"}
       gap={2}

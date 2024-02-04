@@ -49,12 +49,12 @@ const NotesExportImport: React.FC = () => {
   };
 
   return (
-    <Flex justifyContent={"space-evenly"} alignItems={"center"}>
-      <Flex direction={"column"} align="center" justifyContent="space-between">
+    <Flex justifyContent={"space-evenly"} alignItems={{ base: 'flex-start', lg: 'center' }} direction={{ base: 'column', lg: 'row' }}>
+      <Flex direction={"column"} align="center" justifyContent="space-between" mb={{base:4}}>
           <FormLabel htmlFor="importfile" hidden>Import Notes Below (.json/.xls)</FormLabel>
           <Input id="importfile" type="file" accept=".json, .xlsx" onChange={handleFileChange}/>
       </Flex>
-      <Flex direction="row" align="center" justifyContent="space-between">
+      <Flex direction="row" align="center" justifyContent="space-between" mb={{base:4}}>
         <Button leftIcon={<DownloadIcon />} onClick={handleExportJSON} colorScheme="red" size="sm" mr={2}>
           .json
         </Button>
