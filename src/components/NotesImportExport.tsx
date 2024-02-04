@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Flex, Input, Box, FormLabel } from '@chakra-ui/react';
+import { Button, Flex, Input, FormLabel } from '@chakra-ui/react';
 import * as XLSX from 'xlsx';
 import { NoteProps, useNoteStore } from '../store/noteStore';
 import { DownloadIcon } from '@chakra-ui/icons';
@@ -49,20 +49,20 @@ const NotesExportImport: React.FC = () => {
   };
 
   return (
-    <Box>
+    <Flex justifyContent={"space-evenly"} alignItems={"center"}>
       <Flex direction={"column"} align="center" justifyContent="space-between">
-          <FormLabel htmlFor="importfile">Import Notes Below (.json/.xls)</FormLabel>
-          <Input id="importfile" type="file" accept=".json, .xlsx" onChange={handleFileChange} mb={2}/>
+          <FormLabel htmlFor="importfile" hidden>Import Notes Below (.json/.xls)</FormLabel>
+          <Input id="importfile" type="file" accept=".json, .xlsx" onChange={handleFileChange}/>
       </Flex>
-      <Flex direction="row" align="center" justifyContent="space-between" mt={2}>
-        <Button leftIcon={<DownloadIcon />} onClick={handleExportJSON} colorScheme="teal" size="sm" mb={2}>
+      <Flex direction="row" align="center" justifyContent="space-between">
+        <Button leftIcon={<DownloadIcon />} onClick={handleExportJSON} colorScheme="red" size="sm" mr={2}>
           .json
         </Button>
-        <Button leftIcon={<DownloadIcon />} onClick={handleExportExcel} colorScheme="teal" size="sm" mb={2}>
+        <Button leftIcon={<DownloadIcon />} onClick={handleExportExcel} colorScheme="teal" size="sm" >
           .xls
         </Button>
       </Flex>
-    </Box>
+    </Flex>
   );
 };
 

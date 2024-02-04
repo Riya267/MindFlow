@@ -12,7 +12,7 @@ const Header: React.FC = () => {
   return (
     <Grid
       as="header"
-      templateColumns="repeat(5, 1fr)"
+      templateColumns="repeat(2, 1fr)"
       justifyContent={"center"}
       alignItems={"center"}
       gap={2}
@@ -24,11 +24,11 @@ const Header: React.FC = () => {
       zIndex={1}
       bg={colorMode === 'light' ? 'white' : 'gray.800'}
     >
-      <GridItem colSpan={1} justifySelf={"flex-start"}>
+      <GridItem>
         <NotesExportImport />
       </GridItem>
       
-      <GridItem colSpan={3}>
+      <GridItem>
         <Center>
           <Input
               type="text"
@@ -42,10 +42,6 @@ const Header: React.FC = () => {
               value={searchQuery}
               onChange={(e)=>setSearchQuery(e.target.value)}
           />
-        </Center>
-      </GridItem>
-      
-      <GridItem colSpan={1} justifySelf={"flex-end"}>
           <IconButton
             aria-label="Toggle Dark/Light Mode"
             icon={colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
@@ -56,6 +52,7 @@ const Header: React.FC = () => {
             bg="transparent"
             _hover={{ bg: 'gray.300' }}
           />
+        </Center>
       </GridItem>
     </Grid>
   );

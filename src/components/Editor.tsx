@@ -95,21 +95,41 @@ const MarkdownEditor: React.FC = () => {
       }
       setNoteDetails(initialNote)
       setShowEditor(false);
-
     }
   };
 
   const handleCancelAction = () => {
     setExistingNote(initialNote);
     setNoteDetails(initialNote)
+    setFormErrors({});
     setShowEditor(false);
   }
+
+  const textToSpeakAction = () => {
+    if ('speechSynthesis' in window) {
+        const synthesis = window.speechSynthesis;
+        const utterance = new SpeechSynthesisUtterance(noteDetails.content);
+        synthesis.speak(utterance);
+    } else {
+        alert('Text-to-speech is not supported in your browser.');
+    }
+  };
 
   return (
     <>
       {showEditor && (
         <form>
           <Flex justify="flex-end" m={2}>
+            <Button
+              type="button"
+              size="sm"
+              colorScheme="orange"
+              aria-label="Text to Speech"
+              mr={4}
+              onClick={textToSpeakAction}
+            >
+              Text to Speech
+            </Button>
             <Button
               type="button"
               size="sm"
